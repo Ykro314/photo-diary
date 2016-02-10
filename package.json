@@ -1,0 +1,16 @@
+{
+  "name": "test_grunt",
+  "private": true,
+  "devDependencies": {
+    "grunt-autoprefixer": "^3.0.3",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-imagemin": "^1.0.0",
+    "grunt-contrib-less": "^1.1.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-csscomb": "^3.1.0",
+    "grunt-replace": "^0.11.0",
+    "load-grunt-tasks": "^3.4.0"
+  }
+}
