@@ -1,0 +1,184 @@
+
+fieldset.form-record__private {
+  background: @bg-fieldset;
+  & > label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  textarea {
+    width: ~"calc( 100% - 14px )";
+    padding: 7px;
+    min-height: 120px;
+    border-radius: 10px;
+  }
+  & > label,
+  & > section{
+    margin-bottom: 20px;
+  }
+  input {
+    margin-left: 10px;
+  }
+} 
+
+.stars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 300px;
+  input {
+    display: none;
+  }
+  label {
+    width: 50px;
+    height: 50px;
+    background: url("/graph/img/CH-Zusatztafel-Mountain-Bike.svg") no-repeat center center;
+    opacity: 0.35;
+    background-size: 40px; 
+  }
+  input:checked + label {
+    opacity: 1;
+  }
+  label:hover{
+    opacity: 0.6; 
+  }
+  &__title {
+    display: block;
+    flex-basis: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    margin-bottom: 10px;
+  }
+}
+
+.range {
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+  &__title {
+    text-align: center;
+    flex-basis: 100%;
+    margin-bottom: 10px;
+  }
+  &__bar {
+    width: 300px;
+    height: 25px;
+    align-self: center;
+    background: lightgrey;
+    border-radius: 15px; 
+    margin-right: 15px;
+  }
+  &__fill {
+    position: relative;
+    width: 0%;
+    height: 100%;
+    background: #b3ffff;
+    border-radius: 15px;
+  }
+  &__toggle {
+    position: absolute;
+    top: ~"calc(50% - 14px)";
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border: 8px solid #1a53ff;
+    border-radius: 50%;
+    background: #b3ffff;
+    cursor: pointer;
+  }
+  &__output {
+    width: 50px;
+    text-align: center;
+  }
+}
+
+.form-record__photo {
+  background: @bg-fieldset;
+  input {
+    margin-left: 10px;
+  }
+  label {
+    margin-bottom: 20px;
+  }
+  &-container {
+    width: 100%;
+    height: 150px;
+    background: white;
+    border: 1px solid @bc-fieldset;
+    border-radius: 3px;
+  }
+}
+
+.form-record__coords {
+  background: @bg-fieldset;
+  .google-map {
+   display: flex; 
+   justify-content: space-between;
+    &__map {
+      width: 70%;
+      flex-basis: 70%;
+      margin-right: 25px;
+      min-height: 300px;
+      background: grey;
+      flex-shrink: 1;
+    }
+    &__coord-title {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    &__coord-tip {
+      font-size: 15px;
+      margin: 0;
+      margin-bottom: 20px;
+    }
+    &__coord-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+      justify-content: flex-start;
+      width: 30%;
+      label {
+        flex-basis: 100%;
+        margin-bottom: 20px;
+      }
+      input[type="text"] {
+        width: 100%;
+        margin-top: 5px;
+      }
+    }
+    &__coord-save {
+      padding: 5px;
+      background: #b3ffff;
+      border: 1px solid #5fcbcb;
+      border-radius: 5px;
+    }
+  }
+}
+.form-record {
+  text-align: center;
+  input[type="submit"] {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

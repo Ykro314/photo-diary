@@ -1,0 +1,221 @@
+body {
+  background: #cdfefe;
+  font-size: 17px;
+  min-width: 600px;
+}
+.inner {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 50px 10px 100px 10px;
+  background: #ffffff;
+}
+input {
+  box-sizing: border-box;
+  padding: 7px 10px;
+  border: 1px solid #c0c0c0;
+  border-radius: 30px;
+}
+fieldset.formset {
+  margin-bottom: 20px;
+  padding: 20px 40px;
+  border-radius: 5px;
+}
+fieldset.formset legend {
+  font-size: 19px;
+}
+fieldset.formset label {
+  display: block;
+}
+fieldset.form-record__private {
+  background: #f6f6d5;
+}
+fieldset.form-record__private > label {
+  display: block;
+  margin-bottom: 10px;
+}
+fieldset.form-record__private textarea {
+  width: calc( 100% - 14px );
+  padding: 7px;
+  min-height: 120px;
+  border-radius: 10px;
+}
+fieldset.form-record__private > label,
+fieldset.form-record__private > section {
+  margin-bottom: 20px;
+}
+fieldset.form-record__private input {
+  margin-left: 10px;
+}
+.stars {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  width: 300px;
+}
+.stars input {
+  display: none;
+}
+.stars label {
+  width: 50px;
+  height: 50px;
+  background: url("../graph/img/CH-Zusatztafel-Mountain-Bike.svg") no-repeat center center;
+  opacity: 0.35;
+  background-size: 40px;
+}
+.stars input:checked + label {
+  opacity: 1;
+}
+.stars label:hover {
+  opacity: 0.6;
+}
+.stars__title {
+  display: block;
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+  margin-bottom: 10px;
+}
+.range {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  width: 400px;
+}
+.range__title {
+  text-align: center;
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%;
+  margin-bottom: 10px;
+}
+.range__bar {
+  width: 300px;
+  height: 25px;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center;
+  background: lightgrey;
+  border-radius: 15px;
+  margin-right: 15px;
+}
+.range__fill {
+  position: relative;
+  width: 0%;
+  height: 100%;
+  background: #b3ffff;
+  border-radius: 15px;
+}
+.range__toggle {
+  position: absolute;
+  top: calc(50% - 14px);
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 8px solid #1a53ff;
+  border-radius: 50%;
+  background: #b3ffff;
+  cursor: pointer;
+}
+.range__output {
+  width: 50px;
+  text-align: center;
+}
+.form-record__photo {
+  background: #f6f6d5;
+}
+.form-record__photo input {
+  margin-left: 10px;
+}
+.form-record__photo label {
+  margin-bottom: 20px;
+}
+.form-record__photo-container {
+  width: 100%;
+  height: 150px;
+  background: white;
+  border: 1px solid #c0c0c0;
+  border-radius: 3px;
+}
+.form-record__coords {
+  background: #f6f6d5;
+}
+.form-record__coords .google-map {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.form-record__coords .google-map__map {
+  width: 70%;
+  -webkit-flex-basis: 70%;
+      -ms-flex-preferred-size: 70%;
+          flex-basis: 70%;
+  margin-right: 25px;
+  min-height: 300px;
+  background: grey;
+  -webkit-flex-shrink: 1;
+      -ms-flex-negative: 1;
+          flex-shrink: 1;
+}
+.form-record__coords .google-map__coord-title {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.form-record__coords .google-map__coord-tip {
+  font-size: 15px;
+  margin: 0;
+  margin-bottom: 20px;
+}
+.form-record__coords .google-map__coord-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  box-sizing: border-box;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  width: 30%;
+}
+.form-record__coords .google-map__coord-wrapper label {
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%;
+  margin-bottom: 20px;
+}
+.form-record__coords .google-map__coord-wrapper input[type="text"] {
+  width: 100%;
+  margin-top: 5px;
+}
+.form-record__coords .google-map__coord-save {
+  padding: 5px;
+  background: #b3ffff;
+  border: 1px solid #5fcbcb;
+  border-radius: 5px;
+}
+.form-record {
+  text-align: center;
+}
+.form-record input[type="submit"] {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+}

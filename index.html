@@ -1,15 +1,85 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
+ 
   <head>
       <meta charset="UTF-8">
-      <title>Untitled Document</title>
+      <title>Velo journey diary</title>
       <link rel="stylesheet" href="css/styles.css">
-      
-
+      <link rel="stylesheet" href="node_modules/normalize.css/normalize.css">
   </head>
+  
   <body>
-
-
-
+    <div class="inner">
+     <form action="post" class="form-record">
+       <h2 class="form-record__title">Describe your last journey</h2>
+       
+       <fieldset class="formset  form-record__private">
+         <legend>Private info</legend>
+         <label for="title" class="descr__title">
+           Name of journey 
+           <input type="text" name="title" id="title">
+         </label>
+         <label for="date" class="descr__date">
+           Date of journey
+           <input name="date" id="date" type="date">
+         </label>
+         
+         <section class="stars"> 
+             <span class="stars__title">Starscount</span>
+             <input type="radio" name="stars" value="1" id="stars-one">
+             <label for="stars-one"> </label>
+             <input type="radio" name="stars" value="2" id="stars-two">
+             <label for="stars-two"> </label>
+             <input type="radio" name="stars" value="3" id="stars-three">
+             <label for="stars-three"> </label>
+             <input type="radio" name="stars" value="4" id="stars-four">
+             <label for="stars-four"> </label>
+             <input type="radio" name="stars" value="5" id="stars-five">
+             <label for="stars-five"> </label>
+         </section>
+         
+         <section class="range">
+           <span class="range__title">Jorney range</span>
+           <div class="range__bar">
+             <div class="range__fill">
+               <div class="range__toggle"></div>
+             </div>
+           </div>
+           <input type="text" class="range__output" disabled>
+         </section>
+         
+         <label for="description">Description</label>
+         <textarea name="description" id="description"></textarea>
+       </fieldset>
+       <fieldset class="formset  form-record__photo">
+        <legend>Photo</legend>
+         <label for="">Load your awesome photo
+           <input type="file" multiple>
+         </label>
+         <div class="form-record__photo-container"></div>
+       </fieldset>
+       
+       <fieldset class="formset  form-record__coords">
+         <legend>Map</legend>
+         <div class="google-map">
+           <div class="google-map__map" id="map"></div>
+           <div class="google-map__coord-wrapper">
+             <h3 class="google-map__coord-title">Coordinates</h3>
+             <p class="google-map__coord-tip">Click on the map to save position and set the coordinates to the field</p>
+             <label class="google-map__coord-lat">Latitude<input type="text"></label>
+             <label class="google-map__coord-lng">Longitude<input type="text"></label>
+             <button class="google-map__coord-save">Save coords</button>
+           </div>
+         </div>
+       </fieldset>
+       
+       <input type="submit" value="Save to local Storage">
+       <input type="submit" value="Send to server(AJAX)">
+       
+     </form>
+     
+    </div>
+  <script src="js/form.js"></script>
   </body>
+  
 </html>
