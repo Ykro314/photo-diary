@@ -1,12 +1,11 @@
 body {
-  background: #cdfefe;
   font-size: 17px;
   min-width: 600px;
 }
 .inner {
   max-width: 920px;
   margin: 0 auto;
-  padding: 30px 10px 100px 10px;
+  padding: 30px 10px 30px 10px;
   background: #ffffff;
 }
 input {
@@ -53,9 +52,15 @@ fieldset.form-record__private input {
   margin-left: 10px;
 }
 .stars {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
   width: 300px;
   margin-left: 20px;
   margin-right: 20px;
@@ -69,58 +74,80 @@ fieldset.form-record__private input {
   background: url("../graph/img/CH-Zusatztafel-Mountain-Bike.svg") no-repeat center center;
   opacity: 0.35;
   background-size: 40px;
+  transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
 }
 .stars input[value="1"],
 .stars input[value="1"] + label {
-  order: 1;
+  -webkit-order: 1;
+      -ms-flex-order: 1;
+          order: 1;
 }
 .stars input[value="2"],
 .stars input[value="2"] + label {
-  order: 2;
+  -webkit-order: 2;
+      -ms-flex-order: 2;
+          order: 2;
 }
 .stars input[value="3"],
 .stars input[value="3"] + label {
-  order: 3;
+  -webkit-order: 3;
+      -ms-flex-order: 3;
+          order: 3;
 }
 .stars input[value="4"],
 .stars input[value="4"] + label {
-  order: 4;
+  -webkit-order: 4;
+      -ms-flex-order: 4;
+          order: 4;
 }
 .stars input[value="5"],
 .stars input[value="5"] + label {
-  order: 5;
+  -webkit-order: 5;
+      -ms-flex-order: 5;
+          order: 5;
 }
 .stars input:checked ~ label {
   opacity: 1;
 }
 .stars label:hover,
 .stars label:hover ~ label {
-  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 .stars__title {
   display: block;
-  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
+      -webkit-flex-basis: 100%;
+          flex-basis: 100%;
   text-align: center;
   margin-bottom: 5px;
   margin-bottom: 10px;
 }
 .range {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
   width: 400px;
   margin-left: 20px;
   margin-right: 20px;
 }
 .range__title {
   text-align: center;
-  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
+      -webkit-flex-basis: 100%;
+          flex-basis: 100%;
   margin-bottom: 10px;
 }
 .range__bar {
   width: 300px;
   height: 25px;
-  align-self: center;
+  -ms-flex-item-align: center;
+      -webkit-align-self: center;
+          align-self: center;
   background: lightgrey;
   border-radius: 15px;
   margin-right: 15px;
@@ -208,30 +235,39 @@ fieldset.form-record__private input {
   width: 29px;
   height: 4px;
   background: #000;
-  transform-origin: left;
+  -webkit-transform-origin: left;
+          transform-origin: left;
 }
 .form-record__photo-container .close-btn:after {
   top: 0;
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 .form-record__photo-container .close-btn:before {
   bottom: 0;
-  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
 }
 .form-record__coords {
   background: #f6f6d5;
 }
 .form-record__coords .google-map {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .form-record__coords .google-map__map {
+  border: 1px solid #c1c1c1;
   width: 70%;
-  flex-basis: 70%;
   margin-right: 25px;
   min-height: 300px;
   background: grey;
-  flex-shrink: 1;
+  -ms-flex-negative: 1;
+      -webkit-flex-shrink: 1;
+          flex-shrink: 1;
 }
 .form-record__coords .google-map__coord-title {
   margin-top: 0;
@@ -243,15 +279,22 @@ fieldset.form-record__private input {
   margin-bottom: 20px;
 }
 .form-record__coords .google-map__coord-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   box-sizing: border-box;
-  justify-content: flex-start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   width: 30%;
 }
 .form-record__coords .google-map__coord-wrapper label {
-  flex-basis: 100%;
   margin-bottom: 20px;
 }
 .form-record__coords .google-map__coord-wrapper input[type="text"] {
@@ -286,4 +329,104 @@ fieldset.form-record__private input {
   cursor: pointer;
   color: blue;
   text-decoration: underline;
+}
+.articles {
+  border-top: 1px solid #c1c1c1;
+  position: relative;
+}
+.articles__item {
+  position: relative;
+  display: inline-block;
+  width: 300px;
+  height: 250px;
+  box-sizing: border-box;
+  margin-left: 4px;
+  margin-bottom: 4px;
+  font-size: 16px;
+  border: 1px solid #c1c1c1;
+  background: #c1c1c1;
+  background-size: cover;
+  vertical-align: top;
+  color: white;
+  overflow: hidden;
+}
+.articles__item:hover .item__main {
+  -webkit-transform: translate(0);
+          transform: translate(0);
+}
+.articles__item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.articles .item__header {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.articles .item__title {
+  margin: 0;
+  padding: 5px;
+}
+.articles .item__date {
+  font-size: 13px;
+  position: absolute;
+  right: 10px;
+  top: calc(50% - 7px);
+}
+.articles .item__description {
+  border-radius: 5px;
+  display: inline-block;
+  box-sizing: border-box;
+  margin-top: 10%;
+  width: 93%;
+  padding: 10px;
+  margin-left: 3%;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.articles .item__main {
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  -webkit-transform: translate(-100%);
+          transform: translate(-100%);
+}
+.articles .item__wrap {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+}
+.articles .item__wrap > span {
+  border-radius: 5px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.7);
+}
+.articles__buttons-nav {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.articles__buttons-nav li {
+  border: 1px solid #c1c1c1;
+  padding: 10px 20px;
+}
+.articles__buttons-nav li:not(:last-child) {
+  border-right: none;
+}
+.articles__container {
+  padding: 20px 0;
 }

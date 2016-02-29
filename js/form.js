@@ -5,9 +5,6 @@
   
 var form = document.querySelector( ".form-record" );
   
-  
-  
-  
   /*================================ Range slider drag&drop ==================================*/
   
 var toggle = document.querySelector( ".range__toggle" );
@@ -81,14 +78,17 @@ if( "FileReader" in window ){
           var img = new Image();
           img.src = event.target.result;
           img.alt = el.name;
+          var dimension = photoDimension( img );
+          
           previewArray.push( {
             img: img,
             file: event.target.result,
-            alt: el.name
+            alt: el.name,
+            dimension: dimension
           } );
           
           var imgWrap = createPreview( img );
-          imgWrap.classList.add( photoDimension( img ) );
+          imgWrap.classList.add( dimension );
           photoContainer.appendChild( imgWrap );
         });
         
@@ -197,13 +197,13 @@ function initMap() {
   }
 };
   
-changeCoordsBtn.addEventListener( "click", changeCoordsPermit )
+changeCoordsBtn.addEventListener( "click", changeCoordsPermit );
   
 function changeCoordsPermit() {
   event.preventDefault();
   lat.readOnly = false;
   lng.readOnly = false;
-}
+};
   
   
   
@@ -217,25 +217,24 @@ var starsInput = document.querySelectorAll( "input[type=radio]" );
   
 form.addEventListener( "click", function( event ) {
   if( event.target.classList.contains( "form-record__save--local-storage" ) ) {
-    var note = saveNotation( event );
-    if( note ){
-      saveToLocalStorage( note );
-    }
-    else { 
-      return;
-    }
+    saveOnClickTo( event, saveToLocalStorage );
   }
   else if( event.target.classList.contains( "form-record__save--ajax" ) ) {
-    var note = saveNotation( event );
-    if( note ) {
-      sendToServer ( note )
-    }
-    else {
-      return;
-    }
-  } 
+    saveOnClickTo( event, sendToServer );
+  }
   
-})
+});
+  
+function saveOnClickTo( event, callback ) {
+  var note = saveNotation( event );
+  
+  if( note ){
+    callback( note );
+  }
+  else { 
+    return;
+  }
+}
 
 function sendToServer( notation ) {
   var xhr = new XMLHttpRequest();
@@ -245,8 +244,8 @@ function sendToServer( notation ) {
     if( this.readyState == 4 ) {
       console.log( event.responseText );
     }
-  })
-}
+  });
+};
 
 function saveToLocalStorage( notation ) {
   var noteArray = localStorage.getItem( "noteArray" );
@@ -261,7 +260,7 @@ function saveToLocalStorage( notation ) {
     temporaryArray.push( notation );
     localStorage.setItem( "noteArray", JSON.stringify( temporaryArray ) );
   }
-} 
+};
   
 function saveNotation( event ) {
   event.preventDefault();
@@ -272,10 +271,9 @@ function saveNotation( event ) {
   }
   else {
     deleteErrorMessage();
-    var inputs = collectionToArray( privateInputs, getStarsValue( starsInput ) );
-    var notationObj = new Notation( inputs, previewArray );
+    var inputs = collectionToArray( privateInputs, getStarsValue( starsInput ) ); 
     
-    return notationObj;
+    return new Notation( inputs, previewArray );
   }
   
   function checkInputsNotEmpty( inputs ) {
@@ -293,7 +291,7 @@ function saveNotation( event ) {
     else {
       return;
     }
-  }
+  };
   function createErrorMessage( emptyInputs ) {
     var errorElement = document.querySelector( ".form-record__error-message" );
     var message = "";
@@ -309,7 +307,7 @@ function saveNotation( event ) {
     });
 
     errorElement.innerHTML = "Please fill empty fields:" + message;
-  }
+  };
   function deleteErrorMessage() {
     var errorElement = form.querySelector( ".form-record__error-message" );
     
@@ -320,7 +318,7 @@ function saveNotation( event ) {
     else {
       return;
     }
-  }
+  };
   function getStarsValue( starsArray ){
     for( var i = 0; i < starsArray.length; i++ ) {
 
@@ -328,7 +326,7 @@ function saveNotation( event ) {
         return starsArray[i];
       }
     }
-  }
+  };
   function collectionToArray( inputsList, starInput ) {
     var array = [];
 
@@ -341,7 +339,7 @@ function saveNotation( event ) {
     }
 
     return array;
-  }
+  };
   function Notation( inputsArray, imagesArray ) {
     for( var i = 0; i < inputsArray.length; i++ ){
       var name = inputsArray[i].name;
@@ -349,17 +347,14 @@ function saveNotation( event ) {
       this[name] = value;
     }
     this.images = imagesArray;
-  }
-}
+  };
+};
 
   
   
   
   
-  
-  
-  
-  
+
 /*  
 function checkInputsValue( inputs ) {
   var emptyInputs = [];

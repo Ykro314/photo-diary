@@ -11,6 +11,7 @@
   
   <body>
     <div class="inner">
+    
      <form action="post" class="form-record" data-error>
        <h2 class="form-record__title">Describe your last journey</h2>
        
@@ -52,6 +53,7 @@
          <label for="description">Description</label>
          <textarea name="description" id="description" placeholder="Describe your journey with all details" data-info></textarea>
        </fieldset>
+       
        <fieldset class="formset  form-record__photo">
         <legend>Photo</legend>
          <label>Load your awesome photo
@@ -83,9 +85,70 @@
        <div class="form-record__error-message"></div>
        
      </form>
-     
     </div>
+    
+    
+    <section class="articles inner">
+      <ul role="navigation" class="articles__buttons-nav">
+        <li class="articles__render" id="render">Render</li>
+        <li class="articles__stars-top" id="stars-increase">Starscount</li>
+        <li class="articles__range-top" id="range-decrease">Range of journey</li>
+        <li class="articles__with-photo" id="photo-amount">Photo amount</li>
+      </ul>
+      <div class="articles__container"></div>
+    </section>
   <script src="js/form.js"></script>
+  <script src="js/articles.js"></script>
+  
+  
+  
+  <template id="article-template">
+   
+    <article class="articles__item">
+      <img src="" alt="">
+      <header class="item__header">
+        <span class="item__date"></span>
+        <h2 class="item__title"></h2>
+      </header>
+      <main class="item__main">
+        <p class="item__description"></p>
+        <div class="item__wrap">
+          <span class="item__range">Range: </span>
+          <span class="item__stars">Stars: </span>
+          <span class="item__files">Photos: </span>
+        </div>
+      </main>
+    </article>
+    
+  </template>
+  
+  
   </body>
   
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
