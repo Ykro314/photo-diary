@@ -1,9 +1,26 @@
+(function(){
 var renderBtn = document.querySelector( ".articles__render" );
 var articlesNav = document.querySelector( ".articles__buttons-nav" );
+var timeoutId;
+  
+document.addEventListener( "scroll", function( event ){
+  scrollDebounce( firstRenderArticles, 100 );
+});
 
-//renderBtn.addEventListener( "mousedown", renderArticles);
+function scrollDebounce( callback, delay ) {
+  clearTimeout( timeoutId );
+  timeoutId = setTimeout( callback, delay );
+};
+function firstRenderArticles() {
+  var articlesContainer = document.querySelector( ".articles__container" );
+  var coords = articlesContainer.getBoundingClientRect();
+  
+  if( coords.bottom < window.innerHeight && !articlesContainer.getAttribute( "data-fill" ) ) {
+    render( event );
+  };
+};
 
-articlesNav.addEventListener( "mousedown", function( event ) {
+articlesNav.addEventListener( "click", function( event ) {
   switch( event.target.id ) {
     case "render": 
       setBtnToActive( event.target );
@@ -24,6 +41,31 @@ articlesNav.addEventListener( "mousedown", function( event ) {
   };
 });
 
+function render( event, sortFunction ) {
+  var articlesContainer = document.querySelector( ".articles__container" );
+  var fragment = document.createDocumentFragment();
+  var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
+  
+  articlesContainer.innerHTML = "";
+  
+  if( noteArray ) {
+    
+    if ( sortFunction ) {
+      var arrayCopy = noteArray.slice( 0 );
+      noteArray = sortFunction( arrayCopy );
+    }
+    
+    traverseAll( noteArray, fragment );
+    articlesContainer.appendChild( fragment );
+    articlesContainer.setAttribute( "data-fill", true )
+  }
+  else {
+    addEmptyStorageMessage( articlesContainer );
+    return;
+  };
+  
+};
+
 function setBtnToActive ( btn ) {
   var buttons = articlesNav.children;
   for( i = 0; i < buttons.length; i++ ) {
@@ -31,46 +73,19 @@ function setBtnToActive ( btn ) {
   }
   btn.classList.add( "active" );
 }
+  
+function addEmptyStorageMessage( container ) {
+  var divError = document.createElement( "div" );
 
-function render( event, sortFunction ) {
-  var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
-  var articlesContainer = document.querySelector( ".articles__container" );
-  var fragment = document.createDocumentFragment();
-  
-  event.preventDefault();
-  articlesContainer.innerHTML = "";
-  
-  if( noteArray ) {
-    if ( sortFunction ) {
-      var arrayCopy = noteArray.slice( 0 );
-      noteArray = sortFunction( arrayCopy );
-    }
-    traverseAll( noteArray, fragment );
-    articlesContainer.appendChild( fragment );
-    for( i = 0; i < 4; i++ ){
-      articlesContainer.innerHTML += articlesContainer.innerHTML;
-    }
-  }
-  else {
-    console.log( "localStorage is empty" );
-    return;
-  }
-};
+  divError.textContent = "Your storage is empty. Please save notation to proceed."
+  divError.classList.add( "articles__storage-empty" );
 
-function traverseAll( array, fragment ) {
-  var template = document.getElementById( "article-template" );
-  
-  array.forEach( function( el, i, arr) {
-    var templ = template.content.children[0].cloneNode( true );
-    var noteObject = array[i];
-    fillArticlesTemplate( templ, noteObject );
-    fragment.appendChild( templ );
-  });
-};
+  container.appendChild( divError )
+}
 
 function sortByStarsIncrease( array ) {  
   return array.sort( function( a, b ) {
-    return a.stars - b.stars;
+    return b.stars - a.stars;
   });
 };
 function sortByRangeDecrease( array ) {
@@ -80,11 +95,20 @@ function sortByRangeDecrease( array ) {
 };
 function sortByPhotoAmount( array ) {
   return array.sort( function( a, b ) {
-    return a.images.length - b.images.length;
+    return b.images.length - a.images.length;
   });
 };
-
-
+function traverseAll( array, fragment ) {
+  var template = document.getElementById( "article-template" );
+  
+  array.forEach( function( el, i, arr) {
+    var templ = template.content.children[0].cloneNode( true );
+    var noteObject = array[i];
+    
+    fillArticlesTemplate( templ, noteObject );
+    fragment.appendChild( templ );
+  });
+};
   
 function fillArticlesTemplate( template, articleObj ) {
   var descr = template.querySelector( ".item__description" );
@@ -95,39 +119,36 @@ function fillArticlesTemplate( template, articleObj ) {
   var photos = template.querySelector( ".item__files" );
   var backgroundImg = template.querySelector( "img" );
 
-  descr.textContent = articleObj.description.slice( 0, 250 )+ "...";
-  title.textContent = articleObj.title;
+  title.textContent = cutText( articleObj.title, 20 );
   date.textContent = articleObj.date;
+  
+  descr.textContent = cutText( articleObj.description, 250 );
   range.textContent += articleObj.range;
   stars.textContent += articleObj.stars;
   photos.textContent += articleObj.images.length;
+  
   if ( articleObj.images.length ) {
     backgroundImg.src = articleObj.images[0].file;
     backgroundImg.alt = articleObj.images[0].alt;
   };
+  
+  function cutText( text, maxLength ) {
+    if( text.length > maxLength ) {
+      return text.slice( 0, maxLength ) + "...";
+    } 
+    else {
+      return text;
+    }
+  } 
 }
-
-//function renderArticles( event ) {
-//  
-//  var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
-//  var articlesContainer = document.querySelector( ".articles__container" );
-//  articlesContainer.innerHTML = "";
-//  
-//  if ( noteArray ) {
-//    var template = document.getElementById( "article-template" );
-//
-//    event.preventDefault();
-//    renderBtn.textContent = "Refresh";
-//    
-//    noteArray.forEach( function( el, i, arr) {
-//      var templ = template.content.children[0].cloneNode( true );
-//      var noteObject = noteArray[i];
-//
-//      articlesContainer.appendChild( templ );
-//      fillArticlesTemplate( templ, noteObject )
-//    });
-//  }
-//  else {
-//    console.log( "localStorage is empty" );
-//  }
-//}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+})();

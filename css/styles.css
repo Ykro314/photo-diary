@@ -1,6 +1,6 @@
 body {
   font-size: 17px;
-  min-width: 600px;
+  min-width: 630px;
 }
 .inner {
   max-width: 920px;
@@ -324,6 +324,12 @@ fieldset.form-record__private input {
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 15px;
+  transition: all 0.3s;
+}
+.form-record input[type="submit"].error {
+  background: #fd4242;
+  color: white;
+  border-color: white;
 }
 .form-record__error-message a {
   cursor: pointer;
@@ -333,7 +339,6 @@ fieldset.form-record__private input {
 .articles {
   border-top: 1px solid #c1c1c1;
   position: relative;
-  min-height: 500px;
 }
 .articles__item {
   position: relative;
@@ -369,6 +374,7 @@ fieldset.form-record__private input {
 .articles .item__title {
   margin: 0;
   padding: 5px;
+  font-size: 20px;
 }
 .articles .item__date {
   font-size: 13px;
@@ -424,17 +430,26 @@ fieldset.form-record__private input {
 .articles__buttons-nav li {
   border: 1px solid #c1c1c1;
   padding: 10px 20px;
-  background: #000;
-  color: green;
+  background: #fff;
   transition: all 0.8s;
 }
 .articles__buttons-nav li.active {
-  background: #fff;
-  color: red;
+  color: #61cbcb;
 }
 .articles__buttons-nav li:not(:last-child) {
   border-right: none;
 }
 .articles__container {
   padding: 20px 0;
+}
+.articles__storage-empty {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #c0c0c0;
+  text-align: center;
+}
+@media (max-width: 930px) {
+  .articles__container {
+    text-align: center;
+  }
 }

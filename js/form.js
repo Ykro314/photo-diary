@@ -46,8 +46,6 @@ toggle.addEventListener( "mousedown", function( event ) {
   input.value = Math.floor( parseInt( fill.style.width ) / 3 ) + "km";
 };
 });
-
-
   
   
   
@@ -81,7 +79,6 @@ if( "FileReader" in window ){
           var dimension = photoDimension( img );
           
           previewArray.push( {
-            img: img,
             file: event.target.result,
             alt: el.name,
             dimension: dimension
@@ -209,7 +206,7 @@ function changeCoordsPermit() {
   
   
   
-/*==================== Save data ================================*/
+/*=========================== Save data ================================*/
   
 var saveBtn = document.querySelector( ".form-record__save--local-storage" );
 var privateInputs = document.querySelectorAll( "*[data-info]" );
@@ -225,17 +222,6 @@ form.addEventListener( "click", function( event ) {
   
 });
   
-function saveOnClickTo( event, callback ) {
-  var note = saveNotation( event );
-  
-  if( note ){
-    callback( note );
-  }
-  else { 
-    return;
-  }
-}
-
 function sendToServer( notation ) {
   var xhr = new XMLHttpRequest();
   xhr.open( "POST", "test.json", true );
@@ -263,7 +249,20 @@ function saveToLocalStorage( notation ) {
   }
 };
   
-function saveNotation( event ) {
+function saveOnClickTo( event, callback ) {
+  var note = checkInputsCreateNotation( event );
+  
+  if( note ){
+    callback( note );
+    window.location.reload();
+  }
+  else { 
+    return;
+  }
+}
+
+  
+function checkInputsCreateNotation( event ) {
   event.preventDefault();
   var emptyInputs = checkInputsNotEmpty( privateInputs );
   
@@ -273,7 +272,6 @@ function saveNotation( event ) {
   else {
     deleteErrorMessage();
     var inputs = collectionToArray( privateInputs, getStarsValue( starsInput ) ); 
-    
     return new Notation( inputs, previewArray );
   }
   
@@ -294,10 +292,12 @@ function saveNotation( event ) {
     }
   };
   function createErrorMessage( emptyInputs ) {
+    var clickedBtn = event.target;
     var errorElement = document.querySelector( ".form-record__error-message" );
     var message = "";
     
     form.setAttribute( "data-error", "invalid" )
+    clickedBtn.classList.add( "error" );
     emptyInputs.forEach( function( el, i, arr ) {
       if( i == ( arr.length - 1 ) ) {
         message += "<a href=#" + el + "> " + el + "</a>" + ".";
@@ -310,10 +310,12 @@ function saveNotation( event ) {
     errorElement.innerHTML = "Please fill empty fields:" + message;
   };
   function deleteErrorMessage() {
+    var clickedBtn = event.target;
     var errorElement = form.querySelector( ".form-record__error-message" );
     
     if( form.getAttribute( "data-error" ) == "invalid" && errorElement ) {
       errorElement.parentElement.removeChild( errorElement );
+      clickedBtn.classList.remove( "error" )
       form.setAttribute( "data-error", "valid" )
     }
     else {
@@ -354,74 +356,6 @@ function saveNotation( event ) {
   
   
   
-  
-
-/*  
-function checkInputsValue( inputs ) {
-  var emptyInputs = [];
-  
-  for( var i = 0; i < inputs.length; i++ ) {
-    if( !inputs[i].value ) {
-      emptyInputs.push( inputs[i].name );
-    }
-  }
-  
-  if( emptyInputs.length ) {
-    return emptyInputs;
-  }
-  else {
-    return;
-  }
-}
-function createErrorMessage( emptyInputs ) {
-  var errorElement = document.querySelector( ".form-record__error-message" );
-  var message = "";
-  
-  emptyInputs.forEach( function( el, i, arr ) {
-    if( i == ( arr.length - 1 ) ) {
-      message += "<a href=#" + el + "> " + el + "</a>" + ".";
-    }
-    else {
-      message += "<a href=#" + el + "> " + el + "</a>" + ", ";
-    }
-  });
-  
-  errorElement.innerHTML = "Please fill empty fields:" + message;
-}
-
-
-function getStarChecked( starsArray ){
-  for( var i = 0; i < starsArray.length; i++ ) {
-    
-    if( starsArray[i].checked == true ) {
-      return starsArray[i];
-    }
-  }
-}
-
-function toArray( inputsList, starInput ) {
-  var array = [];
-  
-  for( var i = 0; i < inputsList.length; i++ ) {
-    array[i] = inputsList[i];
-  }
-  
-  if( starInput ){
-    array.push( starInput );
-  }
-  
-  return array;
-}  
-  
-function Record( inputsArray, imagesArray ) {
-  for( var i = 0; i < inputsArray.length; i++ ){
-    var name = inputsArray[i].name;
-    var value = inputsArray[i].value;
-    this[name] = value;
-  }
-  this.images = imagesArray;
-}
-  */
   
   
   
