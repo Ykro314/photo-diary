@@ -6,19 +6,31 @@ var articlesNav = document.querySelector( ".articles__buttons-nav" );
 articlesNav.addEventListener( "mousedown", function( event ) {
   switch( event.target.id ) {
     case "render": 
+      setBtnToActive( event.target );
       render( event );
       break;
     case "stars-increase":
+      setBtnToActive( event.target );
       render( event, sortByStarsIncrease );
       break;
     case "range-decrease": 
+      setBtnToActive( event.target );
       render( event, sortByRangeDecrease );
       break;
     case "photo-amount":
+      setBtnToActive( event.target );
       render( event, sortByPhotoAmount );
       break;
   };
 });
+
+function setBtnToActive ( btn ) {
+  var buttons = articlesNav.children;
+  for( i = 0; i < buttons.length; i++ ) {
+    buttons[i].classList.remove( "active" );
+  }
+  btn.classList.add( "active" );
+}
 
 function render( event, sortFunction ) {
   var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
@@ -35,6 +47,9 @@ function render( event, sortFunction ) {
     }
     traverseAll( noteArray, fragment );
     articlesContainer.appendChild( fragment );
+    for( i = 0; i < 4; i++ ){
+      articlesContainer.innerHTML += articlesContainer.innerHTML;
+    }
   }
   else {
     console.log( "localStorage is empty" );
@@ -70,6 +85,27 @@ function sortByPhotoAmount( array ) {
 };
 
 
+  
+function fillArticlesTemplate( template, articleObj ) {
+  var descr = template.querySelector( ".item__description" );
+  var title = template.querySelector( ".item__title" );
+  var date = template.querySelector( ".item__date" );
+  var range = template.querySelector( ".item__range" );
+  var stars = template.querySelector( ".item__stars" );
+  var photos = template.querySelector( ".item__files" );
+  var backgroundImg = template.querySelector( "img" );
+
+  descr.textContent = articleObj.description.slice( 0, 250 )+ "...";
+  title.textContent = articleObj.title;
+  date.textContent = articleObj.date;
+  range.textContent += articleObj.range;
+  stars.textContent += articleObj.stars;
+  photos.textContent += articleObj.images.length;
+  if ( articleObj.images.length ) {
+    backgroundImg.src = articleObj.images[0].file;
+    backgroundImg.alt = articleObj.images[0].alt;
+  };
+}
 
 //function renderArticles( event ) {
 //  
@@ -95,24 +131,3 @@ function sortByPhotoAmount( array ) {
 //    console.log( "localStorage is empty" );
 //  }
 //}
-  
-function fillArticlesTemplate( template, articleObj ) {
-  var descr = template.querySelector( ".item__description" );
-  var title = template.querySelector( ".item__title" );
-  var date = template.querySelector( ".item__date" );
-  var range = template.querySelector( ".item__range" );
-  var stars = template.querySelector( ".item__stars" );
-  var photos = template.querySelector( ".item__files" );
-  var backgroundImg = template.querySelector( "img" );
-
-  descr.textContent = articleObj.description.slice( 0, 250 )+ "...";
-  title.textContent = articleObj.title;
-  date.textContent = articleObj.date;
-  range.textContent += articleObj.range;
-  stars.textContent += articleObj.stars;
-  photos.textContent += articleObj.images.length;
-  if ( articleObj.images.length ) {
-    backgroundImg.src = articleObj.images[0].file;
-    backgroundImg.alt = articleObj.images[0].alt;
-  };
-}

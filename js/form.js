@@ -238,14 +238,15 @@ function saveOnClickTo( event, callback ) {
 
 function sendToServer( notation ) {
   var xhr = new XMLHttpRequest();
-  xhr.open( "POST", "file.json");
+  xhr.open( "POST", "test.json", true );
   xhr.send( JSON.stringify( notation ) );
-  xhr.addEventListener( "readyStateChange", function ( event ){
+  xhr.addEventListener( "readystatechange", function ( event ){
     if( this.readyState == 4 ) {
-      console.log( event.responseText );
+      console.log( this.responseText );
     }
   });
 };
+  
 
 function saveToLocalStorage( notation ) {
   var noteArray = localStorage.getItem( "noteArray" );

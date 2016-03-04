@@ -117,8 +117,8 @@ fieldset.form-record__private input {
 }
 .stars__title {
   display: block;
-  -ms-flex-preferred-size: 100%;
-      -webkit-flex-basis: 100%;
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
           flex-basis: 100%;
   text-align: center;
   margin-bottom: 5px;
@@ -137,16 +137,16 @@ fieldset.form-record__private input {
 }
 .range__title {
   text-align: center;
-  -ms-flex-preferred-size: 100%;
-      -webkit-flex-basis: 100%;
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
           flex-basis: 100%;
   margin-bottom: 10px;
 }
 .range__bar {
   width: 300px;
   height: 25px;
-  -ms-flex-item-align: center;
-      -webkit-align-self: center;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
           align-self: center;
   background: lightgrey;
   border-radius: 15px;
@@ -265,8 +265,8 @@ fieldset.form-record__private input {
   margin-right: 25px;
   min-height: 300px;
   background: grey;
-  -ms-flex-negative: 1;
-      -webkit-flex-shrink: 1;
+  -webkit-flex-shrink: 1;
+      -ms-flex-negative: 1;
           flex-shrink: 1;
 }
 .form-record__coords .google-map__coord-title {
@@ -333,6 +333,7 @@ fieldset.form-record__private input {
 .articles {
   border-top: 1px solid #c1c1c1;
   position: relative;
+  min-height: 500px;
 }
 .articles__item {
   position: relative;
@@ -423,6 +424,13 @@ fieldset.form-record__private input {
 .articles__buttons-nav li {
   border: 1px solid #c1c1c1;
   padding: 10px 20px;
+  background: #000;
+  color: green;
+  transition: all 0.8s;
+}
+.articles__buttons-nav li.active {
+  background: #fff;
+  color: red;
 }
 .articles__buttons-nav li:not(:last-child) {
   border-right: none;
