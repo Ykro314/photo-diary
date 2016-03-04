@@ -4,14 +4,15 @@ var articlesNav = document.querySelector( ".articles__buttons-nav" );
 var timeoutId;
   
 document.addEventListener( "scroll", function( event ){
-  scrollDebounce( firstRenderArticles, 100 );
+  scrollDebounce( renderArticlesOnScroll, 100 );
 });
 
 function scrollDebounce( callback, delay ) {
   clearTimeout( timeoutId );
   timeoutId = setTimeout( callback, delay );
 };
-function firstRenderArticles() {
+
+function renderArticlesOnScroll() {
   var articlesContainer = document.querySelector( ".articles__container" );
   var coords = articlesContainer.getBoundingClientRect();
   
@@ -22,7 +23,7 @@ function firstRenderArticles() {
 
 articlesNav.addEventListener( "click", function( event ) {
   switch( event.target.id ) {
-    case "render": 
+    case "all": 
       setBtnToActive( event.target );
       render( event );
       break;
@@ -37,6 +38,10 @@ articlesNav.addEventListener( "click", function( event ) {
     case "photo-amount":
       setBtnToActive( event.target );
       render( event, sortByPhotoAmount );
+      break;
+    case "date": 
+      setBtnToActive( event.target );
+      render( event, sortByDate );
       break;
   };
 });
@@ -74,6 +79,7 @@ function setBtnToActive ( btn ) {
   btn.classList.add( "active" );
 }
   
+  
 function addEmptyStorageMessage( container ) {
   var divError = document.createElement( "div" );
 
@@ -83,6 +89,7 @@ function addEmptyStorageMessage( container ) {
   container.appendChild( divError )
 }
 
+  
 function sortByStarsIncrease( array ) {  
   return array.sort( function( a, b ) {
     return b.stars - a.stars;
@@ -98,6 +105,13 @@ function sortByPhotoAmount( array ) {
     return b.images.length - a.images.length;
   });
 };
+function sortByDate( array ) {
+  return array.sort( function( a, b ) {
+    return b.date[1] - a.date[1];
+  });
+};
+  
+  
 function traverseAll( array, fragment ) {
   var template = document.getElementById( "article-template" );
   
@@ -110,6 +124,7 @@ function traverseAll( array, fragment ) {
   });
 };
   
+  
 function fillArticlesTemplate( template, articleObj ) {
   var descr = template.querySelector( ".item__description" );
   var title = template.querySelector( ".item__title" );
@@ -120,7 +135,7 @@ function fillArticlesTemplate( template, articleObj ) {
   var backgroundImg = template.querySelector( "img" );
 
   title.textContent = cutText( articleObj.title, 20 );
-  date.textContent = articleObj.date;
+  date.textContent = articleObj.date[0];
   
   descr.textContent = cutText( articleObj.description, 250 );
   range.textContent += articleObj.range;

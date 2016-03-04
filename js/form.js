@@ -254,7 +254,7 @@ function saveOnClickTo( event, callback ) {
   
   if( note ){
     callback( note );
-    window.location.reload();
+//    window.location.reload();
   }
   else { 
     return;
@@ -322,6 +322,7 @@ function checkInputsCreateNotation( event ) {
       return;
     }
   };
+  
   function getStarsValue( starsArray ){
     for( var i = 0; i < starsArray.length; i++ ) {
 
@@ -343,13 +344,37 @@ function checkInputsCreateNotation( event ) {
 
     return array;
   };
+  
   function Notation( inputsArray, imagesArray ) {
-    for( var i = 0; i < inputsArray.length; i++ ){
-      var name = inputsArray[i].name;
-      var value = inputsArray[i].value;
-      this[name] = value;
-    }
+    
+    for( var i = 0; i < inputsArray.length; i++ ) {
+      
+      if( inputsArray[i].name == "date") {
+        var milliseconds1970 = createDateObject( inputsArray[i].value );
+        
+        var name = inputsArray[i].name;
+        var value = [inputsArray[i].value, milliseconds1970];
+        this[name] = value;
+        console.log( value );
+      }
+      else {
+        var name = inputsArray[i].name;
+        var value = inputsArray[i].value;
+        this[name] = value;
+      }
+    };
+    
     this.images = imagesArray;
+    
+    function createDateObject( date ) {
+      var arr = date.split('-');
+      var year = +arr[0];
+      var month = +arr[1];
+      var day = +arr[2];
+      
+      var currentDate = new Date( year, month, day );
+      return currentDate.getTime();
+    };
   };
 };
 
