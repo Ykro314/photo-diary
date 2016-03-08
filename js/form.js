@@ -1,3 +1,4 @@
+/*jslint white: true, vars: true*/
 (function(){
   
 "use strict";
