@@ -99,10 +99,20 @@
       </ul>
       <div class="articles__container" data-fill></div>
     </section>
-  <script src="js/form.js"></script>
-  <script src="js/articles.js"></script>
   
-  
+  <div class="gallery gallery--hidden">
+    <div class="gallery__close-btn"></div>
+    <figure class=gallery__image-wrapper>
+      <img src="http://placehold.it/350x500" alt="gallery-img" class="gallery__image">
+    </figure>
+    <section class="gallery__controls">
+      <div class="gallery__trigger  gallery__trigger--left"></div>
+      <img class="gallery__preview-img  gallery__preview-img--active" src="http://placehold.it/35x15" alt=""></img>
+      <img class="gallery__preview-img" src="http://placehold.it/35x15" alt=""></img>
+      <img class="gallery__preview-img" src="http://placehold.it/35x15" alt=""></img>
+      <div class="gallery__trigger  gallery__trigger--right" src="" alt=""></div>
+    </section>
+  </div>
   
   <template id="article-template">
    
@@ -124,6 +134,10 @@
     
   </template>
   
+  <script src="js/form.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/hotel.js"></script>
+  <script src="js/articles.js"></script>
   
   </body>
   

@@ -4,11 +4,11 @@
 "use strict";
 
 
-
 var renderBtn = document.querySelector( ".articles__render" );
 var articlesNav = document.querySelector( ".articles__buttons-nav" );
 var timeoutId;
-  
+var gallery = new Gallery();
+
 document.addEventListener( "scroll", function( event ){
   scrollDebounce( renderArticlesOnScroll, 100 );
 });
@@ -56,8 +56,14 @@ function render( event, sortFunction ) {
   var articlesContainer = document.querySelector( ".articles__container" );
   var fragment = document.createDocumentFragment();
   var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
+  var hotels = articlesContainer.querySelectorAll( ".articles__item" );
   
-  articlesContainer.innerHTML = "";
+  if( hotels ){
+    [].forEach.call( hotels, function( el, i, arr) {
+      el.removeEventListener( "click", galleryShow );
+      articlesContainer.removeChild( el );
+    })
+  }
   
   if( noteArray ) {
     
@@ -76,10 +82,29 @@ function render( event, sortFunction ) {
   };
   
 };
+  
+function galleryShow() {
+  gallery.show();
+}
+  
+function traverseAll( array, fragment ) {
+  var template = document.getElementById( "article-template" );
+  
+  array.forEach( function( el, i, arr) {
+    var noteObject = array[i];
+
+    var hotel = new Hotel( noteObject );
+    hotel.createHotel();
+    fragment.appendChild( hotel.element );
+    
+    hotel.element.addEventListener( "click", galleryShow );
+    
+  });
+};
 
 function setBtnToActive ( btn ) {
   var buttons = articlesNav.children;
-  for( i = 0; i < buttons.length; i++ ) {
+  for( var i = 0; i < buttons.length; i++ ) {
     buttons[i].classList.remove( "active" );
   }
   btn.classList.add( "active" );
@@ -118,20 +143,9 @@ function sortByDate( array ) {
 };
   
   
-function traverseAll( array, fragment ) {
-  var template = document.getElementById( "article-template" );
-  
-  array.forEach( function( el, i, arr) {
-    var templ = template.content.children[0].cloneNode( true );
-    var noteObject = array[i];
-    
-    fillArticlesTemplate( templ, noteObject );
-    fragment.appendChild( templ );
-  });
-};
   
   
-function fillArticlesTemplate( template, articleObj ) {
+/*function fillArticlesTemplate( template, articleObj ) {
   var descr = template.querySelector( ".item__description" );
   var title = template.querySelector( ".item__title" );
   var date = template.querySelector( ".item__date" );
@@ -161,7 +175,7 @@ function fillArticlesTemplate( template, articleObj ) {
       return text;
     }
   } 
-}
+}*/
   
   
   
