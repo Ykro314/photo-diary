@@ -6,6 +6,7 @@
 
 var renderBtn = document.querySelector( ".articles__render" );
 var articlesNav = document.querySelector( ".articles__buttons-nav" );
+var articlesContainer = document.querySelector( ".articles__container" );
 var timeoutId;
 var gallery = new Gallery();
 
@@ -19,7 +20,6 @@ function scrollDebounce( callback, delay ) {
 };
 
 function renderArticlesOnScroll() {
-  var articlesContainer = document.querySelector( ".articles__container" );
   var coords = articlesContainer.getBoundingClientRect();
   
   if( coords.bottom < window.innerHeight && !articlesContainer.getAttribute( "data-fill" ) ) {
@@ -53,17 +53,19 @@ articlesNav.addEventListener( "click", function( event ) {
 });
 
 function render( event, sortFunction ) {
-  var articlesContainer = document.querySelector( ".articles__container" );
   var fragment = document.createDocumentFragment();
   var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
   var hotels = articlesContainer.querySelectorAll( ".articles__item" );
   
-  if( hotels ){
+  if( hotels.length ){
     [].forEach.call( hotels, function( el, i, arr) {
       el.removeEventListener( "click", galleryShow );
       articlesContainer.removeChild( el );
     })
   }
+//  else {
+//    articlesContainer.innerHTML = "";
+//  }
   
   if( noteArray ) {
     
@@ -112,12 +114,20 @@ function setBtnToActive ( btn ) {
   
   
 function addEmptyStorageMessage( container ) {
-  var divError = document.createElement( "div" );
+  var emptyMessage = articlesContainer.getAttribute( "data-empty" );
+  
+  if( !emptyMessage ) {
+    var divError = document.createElement( "div" );
 
-  divError.textContent = "Your storage is empty. Please save notation to proceed."
-  divError.classList.add( "articles__storage-empty" );
+    divError.textContent = "Your storage is empty. Please save notation to proceed."
+    divError.classList.add( "articles__storage-empty" );
 
-  container.appendChild( divError )
+    container.appendChild( divError )
+    articlesContainer.setAttribute( "data-empty", true );
+  }
+  else {
+    return;
+  }
 }
 
   
