@@ -1,4 +1,9 @@
 /*jslint white: true, vars: true*/
+
+/**
+* @fileoverview Form scripts functional programming
+* @author Stanislav Tyshchuk lolkokpol@gmail.com
+*/
 (function(){
   
 "use strict";
@@ -25,27 +30,31 @@ toggle.addEventListener( "mousedown", function( event ) {
     document.removeEventListener( "mousemove", move );
   });
   
+  /**
+  * Moves toggle element across the bar of the range slider.
+  * @param {object} event
+  */
   function move( event ) {
-  event.preventDefault();
-  
-  var coordBar = bar.getBoundingClientRect();
-  var coordToggle = toggle.getBoundingClientRect();
-  var coordLeft = event.clientX - coordBar.left - ( coordToggle.width / 2 );
-  
-  if( coordLeft < 0 ) {
-    toggle.style.left = 0 + "px";
-    fill.style.width = 0 + "px";
-  }
-  else if( coordLeft > coordBar.width - coordToggle.width ) {
-    toggle.style.left = coordBar.width - coordToggle.width + "px";
-    fill.style.width = coordBar.width + "px";
-  }
-  else {
-    toggle.style.left = coordLeft + "px";
-    fill.style.width = coordLeft + ( coordToggle.width / 2 ) + "px";
-  }
-  input.value = Math.floor( parseInt( fill.style.width ) / 3 ) + "km";
-};
+    event.preventDefault();
+
+    var coordBar = bar.getBoundingClientRect();
+    var coordToggle = toggle.getBoundingClientRect();
+    var coordLeft = event.clientX - coordBar.left - ( coordToggle.width / 2 );
+
+    if( coordLeft < 0 ) {
+      toggle.style.left = 0 + "px";
+      fill.style.width = 0 + "px";
+    }
+    else if( coordLeft > coordBar.width - coordToggle.width ) {
+      toggle.style.left = coordBar.width - coordToggle.width + "px";
+      fill.style.width = coordBar.width + "px";
+    }
+    else {
+      toggle.style.left = coordLeft + "px";
+      fill.style.width = coordLeft + ( coordToggle.width / 2 ) + "px";
+    }
+    input.value = Math.floor( parseInt( fill.style.width ) / 3 ) + "km";
+  };
 });
   
   
@@ -58,18 +67,28 @@ var inputFile = form.querySelector( "input[type='file']" );
 if( "FileReader" in window ){  
   var previewArray = [];
   
-  inputFile.addEventListener( "change", function( event ){
-    
-    var fileList = this.files;
-    var photoContainer = form.querySelector( ".form-record__photo-container" )
-    
-    fileList.forEach = [].forEach;
-    fileList.forEach( function( el, i, arr) {
-      preview( el );
-    });
-    this.value = "";    
+  inputFile.addEventListener( "change", addImagesPreview );
+  
+  /**
+  * Add to container preview of loaded images. For loading we are using input type file with FileReader API.
+  * @param {object} event
+  */
 
-    function preview( el ) {
+  function addImagesPreview ( event ) {
+    var fileList = this.files;
+    var photoContainer = form.querySelector( ".form-record__photo-container" );
+    var fragment = document.createDocumentFragment();
+    
+    [].forEach.call( fileList, function( el ){
+      createImagePreview( el );
+    })
+    this.value = "";    
+    
+    /**
+    * If user loads image, creates preview of loaded image, is pushing Image info to prewievArray, which I will use in articles.js for future templating. Adds image wrap with all needed html/css to the photoContiner.
+    * @param {node} el
+    */
+    function createImagePreview( el ) {
       if( el.type.match( /image.*/ ) ) {
         var reader = new FileReader();
 
@@ -93,6 +112,11 @@ if( "FileReader" in window ){
         reader.readAsDataURL( el ); 
       };
       
+      /**
+      * Investigates the approximate dimension of uploaded photo.
+      * @param {node} photo
+      * @return {string} dimensionClass
+      */
       function photoDimension( photo ) {
         var width = photo.naturalWidth || photo.width;
         var height = photo.naturalHeight || photo.heigth;
@@ -111,6 +135,12 @@ if( "FileReader" in window ){
         
         return dimensionClass;
       };
+      
+      /**
+      * Creates the wrap of image element with close button, adds dimension and decoration classes.
+      * @param {node} photo
+      * @return {node} divWrap
+      */
       function createPreview( photo ) {
         var divWrap = document.createElement( "div" );
         var closeBtn = document.createElement( "span" );
@@ -123,12 +153,17 @@ if( "FileReader" in window ){
         return divWrap;
       }
     };
-  });
+  };
   
   form.addEventListener( "click", function( event ) {
     if( event.target.classList.contains( "close-btn" ) ) {
       removePreview( event );
     };
+    
+    /**
+    * Removes preview of image from container with all maintaining html, removes image element from previewArray.
+    * @param {object} event
+    */
     
     function removePreview( event ) {
       var wrap = event.target.parentElement;
@@ -150,12 +185,15 @@ if( "FileReader" in window ){
   
   
 /*=============================== Google maps ======================================*/  
-var lat = document.querySelector( ".google-map__coord-lat" );
-var lng = document.querySelector( ".google-map__coord-lng" );
+var latInput = document.querySelector( ".google-map__coord-lat" );
+var lngInput = document.querySelector( ".google-map__coord-lng" );
 var changeCoordsBtn = form.querySelector( ".google-map__coord-change" );
   
 document.addEventListener( "DOMContentLoaded", initMap );
   
+/**
+* Initialize google map, and all useful environment
+*/
 function initMap() {
   var mapCanvas = document.getElementById( "map" );
   var mapOptions = {
@@ -167,40 +205,54 @@ function initMap() {
   var mark;
   
   map.addListener( "click", function( event ) {
-    setCoords( event );
-    
     if( mark ) {
       mark.setMap( null );
-      mark = addMark( event );
+      mark = createMarker( event );
     }
     else {
-      mark = addMark( event );
+      mark = createMarker( event );
     }
-    
   });
   
-  function setCoords( event ) {
-    lat.value = event.latLng.lat();
-    lng.value = event.latLng.lng();
-  }
-  function addMark( event ) {
-    var coords = { lat: event.latLng.lat(), lng: event.latLng.lng() };
+  /**
+  * Creats and returns google map marker with coords in clicked place.
+  * @param {object} event
+  * @return {object} marker
+  */
+  function createMarker( event ) {
+    var coords = { 
+      lat: event.latLng.lat(), 
+      lng: event.latLng.lng() 
+    };
+    setCoordsInInputs( coords.lat, coords.lng );
     
     var marker = new google.maps.Marker({
       position: coords,
       map: map
-    })
+    });
     
     return marker;
-  }
+  };
+  /**
+  * Sets value in following to map inputs to the coords of the clicked marker place.
+  * @param {number} lat
+  * @param {number} lng
+  */
+  function setCoordsInInputs( lat, lng ) {
+    latInput.value = lat;
+    lngInput.value = lng;
+  };
 };
   
 changeCoordsBtn.addEventListener( "click", changeCoordsPermit );
-  
-function changeCoordsPermit() {
+/**
+* Changes coord inputs readOnly attribute to false.
+* @param {object} event
+*/
+function changeCoordsPermit( event ) {
   event.preventDefault();
-  lat.readOnly = false;
-  lng.readOnly = false;
+  latInput.readOnly = false;
+  lngInput.readOnly = false;
 };
   
   
@@ -223,6 +275,27 @@ form.addEventListener( "click", function( event ) {
   
 });
   
+/**
+* Calls function that checks inputs and create notation. Calls callback function from params if the notation is ready to save.
+* @param {object} event
+* @param {function} callback
+*/
+function saveOnClickTo( event, callback ) {
+  var note = checkInputsCreateNotation( event );
+  
+  if( note ){
+    callback( note );
+//    window.location.reload();
+  }
+  else { 
+    return;
+  }
+}
+  
+/**
+* Sends notation to the server by ajax request.
+* @param {object} notation
+*/
 function sendToServer( notation ) {
   var xhr = new XMLHttpRequest();
   xhr.open( "POST", "test.json", true );
@@ -234,7 +307,10 @@ function sendToServer( notation ) {
   });
 };
   
-
+/**
+* Works with localStorage data, if localStorage is empty - creates empty array, saves object and pushes it into a localStorage, otherwise pushes object to array, alredy parsed from localStorage.
+* @param {object} notation
+*/
 function saveToLocalStorage( notation ) {
   var noteArray = localStorage.getItem( "noteArray" );
   
@@ -250,19 +326,12 @@ function saveToLocalStorage( notation ) {
   }
 };
   
-function saveOnClickTo( event, callback ) {
-  var note = checkInputsCreateNotation( event );
-  
-  if( note ){
-    callback( note );
-//    window.location.reload();
-  }
-  else { 
-    return;
-  }
-}
 
-  
+/**
+* Checks inputs in form, if there are any empty inputs - creates error message. Otherwise creates and returns notation.
+* @param {object} event
+* @return {object} new Notation
+*/
 function checkInputsCreateNotation( event ) {
   event.preventDefault();
   var emptyInputs = checkInputsNotEmpty( privateInputs );
@@ -276,6 +345,11 @@ function checkInputsCreateNotation( event ) {
     return new Notation( inputs, previewArray );
   }
   
+  /**
+  * Creates empty array. Checks inputs value. Empty inputs adds to array. If array is filled with at least one input  - retuns array.
+  * @param {nodelist} inputs
+  * @return {nodelist} emptyInputs || undefined
+  */
   function checkInputsNotEmpty( inputs ) {
     var emptyInputs = [];
 
@@ -292,6 +366,11 @@ function checkInputsCreateNotation( event ) {
       return;
     }
   };
+  
+  /**
+  * Filles div in marking with string, which represent names empty inputs. Changes form data-error attribute to "invalid".
+  * @param {nodelist} emptyInputs
+  */
   function createErrorMessage( emptyInputs ) {
     var clickedBtn = event.target;
     var errorElement = document.querySelector( ".form-record__error-message" );
@@ -307,15 +386,18 @@ function checkInputsCreateNotation( event ) {
         message += "<a href=#" + el + "> " + el + "</a>" + ", ";
       }
     });
-
-    errorElement.innerHTML = "Please fill empty fields:" + message;
+    
+    errorElement.innerHTML = "Please fill empty fields: " + message;
   };
+  /**
+  * Deletes Error message if it exists, otherwise - returns undefined. Changes form data-error attribute to "valid".
+  */
   function deleteErrorMessage() {
     var clickedBtn = event.target;
     var errorElement = form.querySelector( ".form-record__error-message" );
     
-    if( form.getAttribute( "data-error" ) == "invalid" && errorElement ) {
-      errorElement.parentElement.removeChild( errorElement );
+    if( form.getAttribute( "data-error" ) == "invalid" ) {
+      errorElement.textContent = "";
       clickedBtn.classList.remove( "error" )
       form.setAttribute( "data-error", "valid" )
     }
@@ -324,6 +406,11 @@ function checkInputsCreateNotation( event ) {
     }
   };
   
+  /**
+  * Investigates stars amount, returns checked star input.
+  * @param {nodelist} starsArray
+  * @return {node} starsArray checked element
+  */
   function getStarsValue( starsArray ){
     for( var i = 0; i < starsArray.length; i++ ) {
 
@@ -332,6 +419,12 @@ function checkInputsCreateNotation( event ) {
       }
     }
   };
+  /**
+  * Converts nodelists into array
+  * @param {nodelist} inputsList
+  * @param {node} starInput
+  * @return {array} array
+  */
   function collectionToArray( inputsList, starInput ) {
     var array = [];
 
@@ -345,18 +438,21 @@ function checkInputsCreateNotation( event ) {
 
     return array;
   };
-  
+  /**
+  * Creates object notation from list of inputs and images. 
+  * @constructor 
+  * @param {array.<Nodes} inputsArray
+  * @param {array.<Object>} imagesArray
+  */
   function Notation( inputsArray, imagesArray ) {
     
     for( var i = 0; i < inputsArray.length; i++ ) {
       
       if( inputsArray[i].name == "date") {
-        var milliseconds1970 = createDateObject( inputsArray[i].value );
-        
+        var milliseconds = new Date( inputsArray[i].value ).getTime();
         var name = inputsArray[i].name;
-        var value = [inputsArray[i].value, milliseconds1970];
+        var value = [ inputsArray[i].value, milliseconds ];
         this[name] = value;
-        console.log( value );
       }
       else {
         var name = inputsArray[i].name;
@@ -366,16 +462,6 @@ function checkInputsCreateNotation( event ) {
     };
     
     this.images = imagesArray;
-    
-    function createDateObject( date ) {
-      var arr = date.split('-');
-      var year = +arr[0];
-      var month = +arr[1];
-      var day = +arr[2];
-      
-      var currentDate = new Date( year, month, day );
-      return currentDate.getTime();
-    };
   };
 };
 

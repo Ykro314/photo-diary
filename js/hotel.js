@@ -1,11 +1,17 @@
-"use strict";
-
+/*jslint white: true, vars: true*/
 (function(){
+"use strict";
   
+/**
+* Creates hotel object
+* @constructor
+*/
 function Hotel( data ) {
   this._data = data;
 }
-
+/**
+* Creates template node and filles it with data from local storage.
+*/
 Hotel.prototype.createHotel = function() {
   var templElement = document.getElementById( "article-template" );
   var template = templElement.content.children[0].cloneNode( true );
@@ -32,7 +38,12 @@ Hotel.prototype.createHotel = function() {
   }
   
   this.element = template;
-  
+  /**
+  * Cuts text in message for better looking in the preview.
+  * @param {string} text
+  * @param {number} length
+  * @return {string} text
+  */
   function cutText( text, maxLength ) {
     if( text.length > maxLength ) {
       return text.slice( 0, maxLength ) + "...";
@@ -41,14 +52,9 @@ Hotel.prototype.createHotel = function() {
       return text;
     }
   };
-  
 }
 
-
-
-
 window.Hotel = Hotel;
-  
   
   
 })();
