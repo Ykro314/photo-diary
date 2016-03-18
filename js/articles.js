@@ -9,6 +9,7 @@ var articlesNav = document.querySelector( ".articles__buttons-nav" );
 var articlesContainer = document.querySelector( ".articles__container" );
 var timeoutId;
 var gallery = new Gallery();
+var renderedHotels = [];
 
 document.addEventListener( "scroll", function( event ){
   debounce( renderArticlesOnScroll, 100 );
@@ -68,11 +69,17 @@ function render( event, sortFunction ) {
   var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
   var hotels = articlesContainer.querySelectorAll( ".articles__item" );
   
-  if( hotels.length ){
-    [].forEach.call( hotels, function( el, i, arr) {
-      el.removeEventListener( "click", galleryShow );
-      articlesContainer.removeChild( el );
-    });
+//  if( hotels.length ){
+//    [].forEach.call( hotels, function( el, i, arr) {
+//      el.removeEventListener( "click", galleryShow );
+//      articlesContainer.removeChild( el );
+//    });
+//  }
+  var el;
+  while( el = renderedHotels.shift() ) {
+    articlesContainer.removeChild( el.element );
+    el._showGal = null;
+    el.removeListener();
   }
   
   if( noteArray ) {
@@ -90,8 +97,7 @@ function render( event, sortFunction ) {
     return;
   };
   
-};
-  
+}; 
 /**
 * Creates variables with hotel objects wich are producting by constructor function, starts method createHotel, which will do all the work with templating and creating node element. Then adds already created element to the documentFragment and adds event listener to the element.
 * @param {array} array
@@ -107,17 +113,22 @@ function traverseAll( array, fragment ) {
     hotel.createHotel();
     fragment.appendChild( hotel.element );
     
-    hotel.element.addEventListener( "click", galleryShow );
+    hotel._showGal = function() {
+      gallery.data = hotel._data;
+      gallery.show();
+      gallery.loadImages();
+    }
     
+    renderedHotels.push( hotel );
   });
 };
 
 /**
 * Shows gallery markup
 */
-function galleryShow() {
-  gallery.show();
-}
+//function galleryShow() {
+//  gallery.show();
+//}
 
 /**
 * Sets filter button to active, by adding "active" class with all maintaining css-rules

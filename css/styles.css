@@ -393,6 +393,7 @@ fieldset.form-record__private input {
   margin-left: 3%;
   font-size: 14px;
   background-color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
 }
 .articles .item__main {
   transition: -webkit-transform 0.3s;
@@ -458,7 +459,7 @@ fieldset.form-record__private input {
   left: 0;
   top: 0;
   bottom: 0;
-  padding-top: 80px;
+  padding-top: 60px;
   background: rgba(0, 0, 0, 0.7);
 }
 .gallery__close-btn {
@@ -502,6 +503,9 @@ fieldset.form-record__private input {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .gallery__image-wrapper {
   display: -webkit-flex;
@@ -511,7 +515,7 @@ fieldset.form-record__private input {
       -ms-flex-pack: center;
           justify-content: center;
 }
-.gallery__image {
+.gallery__image--main {
   max-width: 85%;
   max-height: 600px;
 }
@@ -552,6 +556,8 @@ fieldset.form-record__private input {
   margin-left: 8px;
   margin-right: 8px;
   border: 3px solid transparent;
+  max-width: 60px;
+  cursor: pointer;
 }
 .gallery__preview-img--active {
   border: 3px solid white;

@@ -54,6 +54,7 @@
       margin-left: 3%;
       font-size: 14px;
       background-color: @bg-articles-block;
+      cursor: pointer;
     }
     &__main {
       transition: transform 0.3s;
@@ -112,7 +113,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  padding-top: 80px;
+  padding-top: 60px;
   background: rgba(0, 0, 0, 0.7);
   &__close-btn {
     position: absolute;
@@ -146,12 +147,13 @@
   &__controls {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   &__image-wrapper {
     display: flex;
     justify-content: center;
   }
-  &__image {
+  &__image--main {
     max-width: 85%;
     max-height: 600px;
   }
@@ -190,6 +192,8 @@
     margin-left: 8px;
     margin-right: 8px;
     border: 3px solid transparent;
+    max-width: 60px;
+    cursor: pointer;
     &--active {
       border: 3px solid white;
     }

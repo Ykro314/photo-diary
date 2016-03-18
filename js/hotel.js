@@ -16,6 +16,7 @@ Hotel.prototype.createHotel = function() {
   var templElement = document.getElementById( "article-template" );
   var template = templElement.content.children[0].cloneNode( true );
   
+  var item = template.querySelector( ".articles__item" );
   var descr = template.querySelector( ".item__description" );
   var title = template.querySelector( ".item__title" );
   var date = template.querySelector( ".item__date" );
@@ -33,11 +34,28 @@ Hotel.prototype.createHotel = function() {
   photos.textContent += this._data.images.length;
   
   if ( this._data.images.length ) {
-    backgroundImg.src = this._data.images[0].file;
-    backgroundImg.alt = this._data.images[0].alt;
+    template.style.backgroundImage = "url(" + this._data.images[0].file + ")";
+    template.setAttribute( "data-photo", this._data.images.length );
+  }
+  else {
+    template.setAttribute( "data-photo", 0 );
   }
   
   this.element = template;
+  
+  
+  Hotel.prototype._onClick = function( event ) {
+    if( event.target.classList.contains( "item__description" ) && event.currentTarget.getAttribute( "data-photo" ) !== "0" ) {
+      if( typeof this._showGal === "function" ) {
+        this._showGal();
+      }
+    }
+  }
+  this.element.addEventListener( "click", this._onClick.bind( this ) );
+  
+  Hotel.prototype.removeListener = function() {
+    this.element.removeEventListener( "click", this._onClick );
+  }
   /**
   * Cuts text in message for better looking in the preview.
   * @param {string} text
@@ -53,6 +71,8 @@ Hotel.prototype.createHotel = function() {
     }
   };
 }
+
+Hotel.prototype._showGal = null;
 
 window.Hotel = Hotel;
   
