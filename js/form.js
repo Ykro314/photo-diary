@@ -167,11 +167,11 @@ if( "FileReader" in window ){
     
     function removePreview( event ) {
       var wrap = event.target.parentElement;
-      var img = event.target.previousElementSibling;
+      var alt = event.target.previousElementSibling.alt;
       
       wrap.parentElement.removeChild( wrap );
       previewArray.forEach( function( el, i, arr) {
-        if( el.img == img ) {
+        if( el.alt === alt ) {
           previewArray.splice( i, 1 );
         };
       });

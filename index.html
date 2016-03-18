@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Velo journey diary</title>
       <link rel="stylesheet" href="css/styles.css">
-      <link rel="stylesheet" href="node_modules/normalize.css/normalize.css">
+      <link rel="stylesheet" href="css/normalize.css">
       <script src="https://maps.googleapis.com/maps/api/js"></script>
   </head>
   
@@ -88,7 +88,6 @@
      </form>
     </div>
     
-    
     <section class="articles inner">
       <ul role="navigation" class="articles__buttons-nav">
         <li class="articles__all" id="all">All</li>
@@ -103,21 +102,20 @@
   <div class="gallery gallery--hidden">
     <div class="gallery__close-btn"></div>
     <figure class=gallery__image-wrapper>
-      <img src="http://placehold.it/350x500" alt="gallery-img" class="gallery__image">
+      <img class="gallery__image--main" src="#" alt="gallery-img">
     </figure>
     <section class="gallery__controls">
-      <div class="gallery__trigger  gallery__trigger--left"></div>
-      <img class="gallery__preview-img  gallery__preview-img--active" src="http://placehold.it/35x15" alt=""></img>
-      <img class="gallery__preview-img" src="http://placehold.it/35x15" alt=""></img>
-      <img class="gallery__preview-img" src="http://placehold.it/35x15" alt=""></img>
-      <div class="gallery__trigger  gallery__trigger--right" src="" alt=""></div>
+      <div class="gallery__trigger  gallery__trigger--left" id="trigger-left"></div>
+      <div class="gallery__preview-wrapper">
+      </div>
+      <div class="gallery__trigger  gallery__trigger--right" id="trigger-right"></div>
     </section>
   </div>
   
   <template id="article-template">
    
     <article class="articles__item">
-      <img src="" alt="">
+<!--      <img class="item__image" src="" alt="">-->
       <header class="item__header">
         <span class="item__date"></span>
         <h2 class="item__title"></h2>
