@@ -506,6 +506,11 @@ fieldset.form-record__private input {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
 }
 .gallery__image-wrapper {
   display: -webkit-flex;
@@ -514,10 +519,14 @@ fieldset.form-record__private input {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 46%;
+  -webkit-transform: translateX(-50%) translateY(-60%);
+          transform: translateX(-50%) translateY(-60%);
 }
 .gallery__image--main {
-  max-width: 85%;
-  max-height: 600px;
+  max-height: 550px;
 }
 .gallery__trigger {
   position: relative;

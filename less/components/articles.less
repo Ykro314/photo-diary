@@ -109,6 +109,7 @@
 }
 .gallery {
   position: fixed;
+//  display: flex;
   right: 0;
   left: 0;
   top: 0;
@@ -148,14 +149,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%);
   }
   &__image-wrapper {
     display: flex;
     justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 46%;
+    transform: translateX(-50%) translateY(-60%);
   }
   &__image--main {
-    max-width: 85%;
-    max-height: 600px;
+    max-height: 550px;
   }
   &__trigger {
     position: relative;
