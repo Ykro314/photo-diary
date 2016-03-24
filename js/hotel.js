@@ -25,17 +25,19 @@ Hotel.prototype.createHotel = function() {
   var photos = template.querySelector( ".item__files" );
   var backgroundImg = template.querySelector( "img" );
 
-  title.textContent = cutText( this._data.title, 20 );
-  date.textContent = this._data.date[0];
+  title.textContent = cutText( this._data.getTitle(), 20 );
+  date.textContent = this._data.getDateString();
   
-  descr.textContent = cutText( this._data.description, 250 );
-  range.textContent += this._data.range;
-  stars.textContent += this._data.stars;
-  photos.textContent += this._data.images.length;
+  descr.textContent = cutText( this._data.getDescription(), 250 );
+  range.textContent += this._data.getRange();
+  stars.textContent += this._data.getStars();
   
-  if ( this._data.images.length ) {
-    template.style.backgroundImage = "url(" + this._data.images[0].file + ")";
-    template.setAttribute( "data-photo", this._data.images.length );
+  var imagesLength = this._data.getImagesLength()
+  photos.textContent += imagesLength || 0;
+  
+  if ( imagesLength ) {
+    template.style.backgroundImage = "url(" + this._data.getImgFile( 0 ) + ")";
+    template.setAttribute( "data-photo", imagesLength );
   }
   else {
     template.setAttribute( "data-photo", 0 );

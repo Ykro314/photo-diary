@@ -65,16 +65,14 @@ articlesNav.addEventListener( "click", function( event ) {
 * @param {function} sortFunction
 */
 function render( event, sortFunction ) {
-  var fragment = document.createDocumentFragment();
-  var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
   var hotels = articlesContainer.querySelectorAll( ".articles__item" );
+  var fragment = document.createDocumentFragment();
   
-//  if( hotels.length ){
-//    [].forEach.call( hotels, function( el, i, arr) {
-//      el.removeEventListener( "click", galleryShow );
-//      articlesContainer.removeChild( el );
-//    });
-//  }
+  var noteArray = JSON.parse( localStorage.getItem( "noteArray" ) );
+  noteArray = noteArray.map( function( hotelData ) {
+    return new HotelData( hotelData );
+  })
+  
   var el;
   while( el = renderedHotels.shift() ) {
     articlesContainer.removeChild( el.element );
@@ -169,22 +167,22 @@ function addEmptyStorageMessage( container ) {
 */
 function sortByStarsIncrease( array ) {  
   return array.sort( function( a, b ) {
-    return b.stars - a.stars;
+    return b.getStars() - a.getStars();
   });
 };
 function sortByRangeDecrease( array ) {
   return array.sort( function( a, b ) {
-    return parseInt( b.range ) - parseInt( a.range );
+    return parseInt( b.getRange() ) - parseInt( a.getRange() );
   });
 };
 function sortByPhotoAmount( array ) {
   return array.sort( function( a, b ) {
-    return b.images.length - a.images.length;
+    return b.getImagesLength() - a.getImagesLength();
   });
 };
 function sortByDate( array ) {
   return array.sort( function( a, b ) {
-    return b.date[1] - a.date[1];
+    return b.getDateInMilliseconds() - a.getDateInMilliseconds();
   });
 };
   

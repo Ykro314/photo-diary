@@ -78,11 +78,11 @@ Gallery.prototype.closeOnEscape = function( event ) {
   
 Gallery.prototype.loadImages = function() {
   
-  for( var i = 0; i < this.data.images.length; i++ ) {
+  for( var i = 0; i < this.data.getImages().length; i++ ) {
     var previewImage = document.createElement( "img" );
     
     this.previewImagesWrapper.appendChild( previewImage );
-    previewImage.src = this.data.images[i].file;
+    previewImage.src = this.data.getImgFile( i );
     previewImage.classList.add( "gallery__preview-img" );
     previewImage.setAttribute( "data-preview", i );
     this.previewsArray.push( previewImage );
@@ -106,7 +106,7 @@ Gallery.prototype.setMainImage = function( x ) {
     return;
   }
   
-  this.mainImage.src = this.data.images[x].file
+  this.mainImage.src = this.data.getImgFile( x );
   this.index = x;
   return;
 }
