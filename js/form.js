@@ -190,7 +190,6 @@ var lngInput = document.querySelector( ".google-map__coord-lng" );
 var changeCoordsBtn = form.querySelector( ".google-map__coord-change" );
   
 document.addEventListener( "DOMContentLoaded", initMap );
-  
 /**
 * Initialize google map, and all useful environment
 */
@@ -265,6 +264,20 @@ var saveBtn = document.querySelector( ".form-record__save--local-storage" );
 var privateInputs = document.querySelectorAll( "*[data-info]" );
 var starsInput = document.querySelectorAll( "input[type=radio]" );
   
+window.addEventListener( "beforeunload", checkBeforeUnload );
+
+function checkBeforeUnload( event ) {
+  var empty = checkInputsNotEmpty( privateInputs );
+//  console.log( empty.length <= privateInputs.length );
+  if( empty.length < privateInputs.length ) {
+    event.returnValue = "You have some unsaved data. Do you really want to leave?"; 
+  } 
+  else {
+    return;
+  }
+}
+  
+  
 form.addEventListener( "click", function( event ) {
   if( event.target.classList.contains( "form-record__save--local-storage" ) ) {
     saveOnClickTo( event, saveToLocalStorage );
@@ -285,7 +298,7 @@ function saveOnClickTo( event, callback ) {
   
   if( note ){
     callback( note );
-//    window.location.reload();
+    window.location.reload();
   }
   else { 
     return;
@@ -326,6 +339,27 @@ function saveToLocalStorage( notation ) {
   }
 };
   
+/**
+* Creates empty array. Checks inputs value. Empty inputs adds to array. If array is filled with at least one input  - retuns array.
+* @param {nodelist} inputs
+* @return {nodelist} emptyInputs || undefined
+*/
+function checkInputsNotEmpty( inputs ) {
+  var emptyInputs = [];
+
+  for( var i = 0; i < inputs.length; i++ ) {
+    if( !inputs[i].value ) {
+      emptyInputs.push( inputs[i].name );
+    }
+  }
+
+  if( emptyInputs.length ) {
+    return emptyInputs;
+  }
+  else {
+    return;
+  }
+};
 
 /**
 * Checks inputs in form, if there are any empty inputs - creates error message. Otherwise creates and returns notation.
@@ -345,27 +379,6 @@ function checkInputsCreateNotation( event ) {
     return new Notation( inputs, previewArray );
   }
   
-  /**
-  * Creates empty array. Checks inputs value. Empty inputs adds to array. If array is filled with at least one input  - retuns array.
-  * @param {nodelist} inputs
-  * @return {nodelist} emptyInputs || undefined
-  */
-  function checkInputsNotEmpty( inputs ) {
-    var emptyInputs = [];
-
-    for( var i = 0; i < inputs.length; i++ ) {
-      if( !inputs[i].value ) {
-        emptyInputs.push( inputs[i].name );
-      }
-    }
-
-    if( emptyInputs.length ) {
-      return emptyInputs;
-    }
-    else {
-      return;
-    }
-  };
   
   /**
   * Filles div in marking with string, which represent names empty inputs. Changes form data-error attribute to "invalid".
