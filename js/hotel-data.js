@@ -1,4 +1,4 @@
-(function(){
+define( function(){
 "use strict"
 /**
 * @constructor
@@ -41,6 +41,6 @@ HotelData.prototype.getImgFile = function( x ) {
 
 
 
-window.HotelData = HotelData;
-  
-})()
+//window.HotelData = HotelData;
+return HotelData;  
+});

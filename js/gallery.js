@@ -1,5 +1,5 @@
 /*jslint white: true, vars: true*/
-(function(){
+define( function(){
   
 /**
 * @enum {number}
@@ -145,6 +145,6 @@ Gallery.prototype.clickOnTrigger = function( event ) {
   }
 }
   
-window.Gallery = Gallery;
+return Gallery;
   
-})();
+});

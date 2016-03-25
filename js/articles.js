@@ -1,7 +1,17 @@
 /*jslint white: true, vars: true*/
-(function (){
-  
-"use strict";
+
+requirejs.config({
+  baseUrl: "js"
+});
+define([
+  "hotel",
+  "gallery",
+  "hotel-data",
+  "form",
+  "https://maps.googleapis.com/maps/api/js",
+], function ( Hotel, Gallery, HotelData ){
+   
+//"use strict";
 
 var form = document.querySelector( ".form-record" );
 var renderBtn = document.querySelector( ".articles__render" );
@@ -76,6 +86,7 @@ articlesNav.addEventListener( "click", function( event ) {
 * @param {function} sortFunction
 */
 function render( event, sortFunction ) {
+  console.time("ar");
   var hotels = articlesContainer.querySelectorAll( ".articles__item" );
   var fragment = document.createDocumentFragment();
   
@@ -111,7 +122,7 @@ function render( event, sortFunction ) {
     addEmptyStorageMessage( articlesContainer );
     return;
   };
-  
+  console.timeEnd("ar")
 }; 
 /**
 * Creates variables with hotel objects wich are producting by constructor function, starts method createHotel, which will do all the work with templating and creating node element. Then adds already created element to the documentFragment and adds event listener to the element.
@@ -212,4 +223,4 @@ function sortByDate( array ) {
   });
 };
   
-})();
+});

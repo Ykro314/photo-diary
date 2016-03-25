@@ -1,5 +1,5 @@
 /*jslint white: true, vars: true*/
-(function(){
+define ( function(){
 "use strict";
   
 /**
@@ -76,7 +76,8 @@ Hotel.prototype.createHotel = function() {
 
 Hotel.prototype._showGal = null;
 
-window.Hotel = Hotel;
+return Hotel;
+//window.Hotel = Hotel;
   
   
-})();
+});

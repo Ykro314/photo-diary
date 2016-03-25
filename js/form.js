@@ -4,7 +4,7 @@
 * @fileoverview Form scripts functional programming
 * @author Stanislav Tyshchuk lolkokpol@gmail.com
 */
-(function(){
+define (/* ['async!https://maps.googleapis.com/maps/api/js'],*/ function(){
   
 "use strict";
   
@@ -480,27 +480,4 @@ function checkInputsCreateNotation( event ) {
 
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-})();
+});
